@@ -1,12 +1,41 @@
-# React + Vite
+# 💚 CarePulse Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The **CarePulse Client** is the frontend of the CarePulse health monitoring system — a responsive Progressive Web App (PWA) built using **React**, **Tailwind CSS**, and **Recharts**. It provides real-time health insights, AI-driven symptom analysis, and doctor appointment booking for remote patients.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## Expanding the ESLint configuration
+- 🧠 **AI Symptom Analysis** (powered by OpenAI or local LLMs)
+- 📊 **Vitals Chart** with real-time WebSocket updates
+- 🔔 **Abnormal Health Alerts**
+- 📅 **Doctor Appointment Booking**
+- 💬 **AI Assistant Chat Interface**
+- 📝 **Manual Vitals Entry Form**
+- 📄 **Vitals Table View**
+- 🧮 **BMI & Calorie Calculator**
+- 🥗 **AI Diet Suggestion Card**
+- 📱 **Installable PWA Support**
+- 🌙 **Dark Mode Ready (optional)**
+- 🔐 **JWT Authentication**
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🛠️ Tech Stack
+
+- **React** (w/ Hooks)
+- **Tailwind CSS**
+- **Axios**
+- **Recharts** (for graphs)
+- **WebSockets** (real-time vitals)
+- **Vite** (fast dev server + build tool)
+- **PWA** (manifest + service worker)
+
+---
+
+## 🔧 Setup Instructions
+
+### 1. 📦 Install Dependencies
+
+```bash
+npm install
