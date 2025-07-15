@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import API from "../api"; // ✅ Central API instance
 
-const VitalsTable = () => {
+const VitalsTable = ({ refreshTrigger }) => {
   const [vitals, setVitals] = useState([]);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ const VitalsTable = () => {
     };
 
     fetchVitals();
-  }, []);
+  }, [refreshTrigger]); // 👈 runs whenever `refreshTrigger` changes
 
   return (
     <div className="overflow-x-auto">
@@ -63,4 +63,3 @@ const VitalsTable = () => {
 };
 
 export default VitalsTable;
-

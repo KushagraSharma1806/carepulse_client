@@ -7,9 +7,21 @@ import ChatWithAI from "../components/ChatWithAI";
 import AppointmentTable from "../components/AppointmentTable";
 import BMICard from "../components/BMICard";
 import WellnessTipCard from "../components/WellnessTipCard";
+import API from "../api";
 
 const DashboardPage = () => {
   const [showBMI, setShowBMI] = useState(false);
+  const [refreshTrigger, setRefreshTrigger] = useState(0); // 🔁 shared refresh state
+
+  // 🔁 Refresh manually after vitals submission
+  const handleVitalsSubmit = async (formData) => {
+    try {
+      await API.post("/vitals", formData);
+      setRefreshTrigger((prev) => prev + 1);
+    } catch (err) {
+      console.error("Failed to submit vitals:", err);
+    }
+  };
 
   return (
     <>
@@ -43,18 +55,18 @@ const DashboardPage = () => {
           {/* Record New Vitals */}
           <div className="bg-white rounded-2xl shadow-lg p-6">
             <h2 className="text-xl font-semibold text-green-700 mb-4">Record New Vitals</h2>
-            <VitalsForm />
+            <VitalsForm onSubmit={handleVitalsSubmit} /> {/* 🔁 pass custom submit handler */}
           </div>
 
           {/* AI Assistant + Vitals Chart */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <h2 className="text-xl font-semibold text-green-700 mb-4">AI Health Assistant</h2>
-              <ChatWithAI />
+              <ChatWithAI onAppointmentBooked={() => setRefreshTrigger(prev => prev + 1)} />
             </div>
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <h2 className="text-xl font-semibold text-green-700 mb-4">Vitals Trends</h2>
-              <VitalsChart />
+              <VitalsChart refreshTrigger={refreshTrigger} />
             </div>
           </div>
 
@@ -62,11 +74,11 @@ const DashboardPage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <h2 className="text-xl font-semibold text-green-700 mb-4">Vitals History</h2>
-              <VitalsTable />
+              <VitalsTable refreshTrigger={refreshTrigger} />
             </div>
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <h2 className="text-xl font-semibold text-green-700 mb-4">Appointments</h2>
-              <AppointmentTable />
+              <AppointmentTable refreshTrigger={refreshTrigger} />
             </div>
           </div>
         </div>

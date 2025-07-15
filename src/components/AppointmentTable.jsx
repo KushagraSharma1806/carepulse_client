@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api";
 
-const AppointmentTable = () => {
+const AppointmentTable = ({ refreshTrigger }) => {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ const AppointmentTable = () => {
     };
 
     fetchAppointments();
-  }, [navigate]);
+  }, [navigate, refreshTrigger]); // 🔁 re-run on trigger
 
   const getStatusColor = (status = "") => {
     switch (status.toLowerCase()) {
@@ -70,7 +70,9 @@ const AppointmentTable = () => {
               {appointments.length > 0 ? (
                 appointments.map((appt, index) => (
                   <tr key={appt._id} className="hover:bg-gray-50 transition">
-                    <td className="px-4 py-3 text-sm text-gray-500">{String(index + 1).padStart(2, '0')}</td>
+                    <td className="px-4 py-3 text-sm text-gray-500">
+                      {String(index + 1).padStart(2, '0')}
+                    </td>
                     <td className="px-4 py-3 text-sm font-medium text-gray-900">
                       {appt.reason || "—"}
                     </td>

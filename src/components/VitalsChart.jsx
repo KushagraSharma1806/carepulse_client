@@ -13,7 +13,7 @@ import {
   CartesianGrid,
 } from "recharts";
 
-const VitalsChart = () => {
+const VitalsChart = ({ refreshTrigger }) => {
   const [vitals, setVitals] = useState([]);
   const [filterDays, setFilterDays] = useState("all");
   const [isLoading, setIsLoading] = useState(true);
@@ -57,12 +57,14 @@ const VitalsChart = () => {
     }
   }, [filterDays, navigate]);
 
+  // 🔁 Real-time update using WebSocket
   useVitalsWebSocket((msg) => {
     if (msg.event === "new_vitals") {
       fetchVitals();
     }
   });
 
+  // 🔁 Trigger fetch on initial load or manual refresh
   useEffect(() => {
     const token = localStorage.getItem("access_token");
     if (!token) {
@@ -70,7 +72,7 @@ const VitalsChart = () => {
       return;
     }
     fetchVitals();
-  }, [fetchVitals, navigate]);
+  }, [fetchVitals, navigate, refreshTrigger]); // 👈 added `refreshTrigger`
 
   const getAlerts = (latest) => {
     if (!latest) return [];
@@ -146,7 +148,7 @@ const VitalsChart = () => {
               ✅ All vitals are within normal range
             </div>
           ) : (
-            alerts.map((alert, idx) => (
+            alerts.map((alert) => (
               <div
                 key={alert.key}
                 className="bg-red-100 text-red-800 p-3 rounded-lg animate-pulse"
